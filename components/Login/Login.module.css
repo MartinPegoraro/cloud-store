@@ -1,0 +1,25 @@
+.imgLogin {
+    width: 95%; 
+    height: 100%;
+    border-radius: 10%; 
+    object-fit: fill;
+}
+
+.loginModalContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+  }
+  
+  .loginModalCard {
+    width: 400px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #ffffff;
+    border-radius: 15px;
+    box-shadow: 0px 0px 24px rgba(87, 87, 87, 0.5); 
+    padding: 25px;
+    opacity: 0.9;
+    text-align: center;
+  }
