@@ -1,10 +1,24 @@
 import React, { useState } from 'react'
-import { Grid, Box, Button } from '@mui/material';
+import { Grid, Box, Button, ImageList, ImageListItem } from '@mui/material';
 import style from './Login.module.css'
 import ModalLogin from './ModalLogin';
+import images from './img'
+import ModalRegistration from './ModalRegistration';
+import { Router, useRouter } from 'next/router';
 function Login() {
     const [open, setOpen] = useState(false);
+    const [openRegistration, setOpenRegistration] = useState(false);
+
+    const router = useRouter()
+
+    const handleOpenRegistration = () => {
+        console.log('asdasd');
+        setOpenRegistration(true);
+    }
+    const handleCloseRegistration = () => setOpenRegistration(false);
+
     const handleOpen = () => {
+        router.push('/textil-hugo')
         setOpen(true);
     }
     const handleClose = () => setOpen(false);
@@ -14,10 +28,14 @@ function Login() {
             <ModalLogin handleClose={handleClose}
                 open={open}
             />
+            <ModalRegistration handleClose={handleCloseRegistration}
+                open={openRegistration} />
             <Box sx={{ textAlign: 'right' }}>
+                <Button variant="contained" sx={{ m: 2 }} onClick={() => handleOpenRegistration()}>Registration</Button>
+
                 <Button variant="contained" sx={{ m: 2 }} onClick={() => handleOpen()}>login</Button>
             </Box>
-            <Grid container>
+            <Grid container className={style.gridContainer}>
                 <Grid item xs={4} sx={{ lineHeight: 3.5, p: 2 }}>
                     <p>
                         ¿Qué es Lorem Ipsum?
@@ -26,34 +44,35 @@ function Login() {
                 </Grid>
                 <Grid item xs={8}>
                     <Grid container >
-                        <Grid item xs={6} sx={{ height: '50vh', p: 1 }}>
-                            <img
-                                className={style.imgLogin}
-                                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH5cTs9sAes73wjQLQthh8fTI4nTIOtdXPUw&usqp=CAU'
-                                alt='img'
-                            />
-                        </Grid>
-                        <Grid item xs={6} sx={{ height: '50vh', p: 1 }}>
-                            <img
-                                className={style.imgLogin}
-                                src='https://cdn1.hendyla.com/archivos/imagenes/2015/10/12/publicacion-grupo-1503112696631497_1779541642321933-0-792b8e2d30d37f582439f0b29ed76394-830_A.jpg'
-                                alt='img'
-                            />
-                        </Grid>
-                        <Grid item xs={6} sx={{ height: '50vh', p: 1 }}>
-                            <img
-                                className={style.imgLogin}
-                                src='https://www.digitalsport.com.ar/files/products/594d6b7eb853a-435243-500x500.jpg'
-                                alt='img'
-                            />
-                        </Grid>
-                        <Grid item xs={6} sx={{ height: '50vh', p: 1 }}>
-                            <img
-                                className={style.imgLogin}
-                                src='https://http2.mlstatic.com/D_NQ_NP_724050-MLA42682514389_072020-V.jpg'
-                                alt='img'
-                            />
-                        </Grid>
+
+                        <ImageList sx={{ width: '99%', height: '99%' }} variant="woven" cols={3} gap={8}>
+                            {images.map((item) => (
+                                <ImageListItem key={item.url}>
+                                    <img
+                                        srcSet={`${item.url}?w=161&fit=crop&auto=format&dpr=2 2x`}
+                                        src={`${item.url}?w=161&fit=crop&auto=format`}
+                                        alt='img'
+                                        loading="lazy"
+                                    />
+                                </ImageListItem>
+                            ))}
+                        </ImageList>
+
+                        {/* 
+                        {images.map((img, index) => {
+                            return (
+                                <Grid key={index} item xs={4} sx={{ height: '40vh', p: 1 }}>
+                                    <img
+                                        className={style.imgLogin}
+                                        src={img.url}
+                                        alt='img'
+                                    />
+                                </Grid>
+                            )
+                        })
+
+                        } */}
+
 
                     </Grid>
 
