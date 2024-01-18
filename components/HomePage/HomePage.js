@@ -26,24 +26,27 @@ import KeyboardCommandKeyIcon from '@mui/icons-material/KeyboardCommandKey';
 import { toggleMenuVisibility, selectMenuVisibility } from '../Redux/MenuSlice';
 import ModalImg from './ModalImg';
 import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
 function HomePage() {
     const [open, setOpen] = useState(false);
     const [image, setImage] = useState({});
-    const [state, setState] = useState('')
-    const [resultItem, setResultItem] = useState([])
     const openMenu = useSelector(selectMenuVisibility)
+    const router = useRouter()
 
-    const filterState = (selection) => {
-        setState(selection)
-        const resultFilter = itemData.filter((item) => {
-            return item.title === selection
+    const selectionCategories = (selection) => {
+        router.push({
+            pathname: `/textil-hugo/categories/${selection}`,
         })
-
-        setResultItem(resultFilter)
     }
 
-    console.log(state);
+    const handleAbout = () => {
+        router.push('/textil-hugo/about')
+    }
+
+    const handleContact = () => {
+        router.push('/textil-hugo/contact')
+    }
 
     const handleOpen = (item) => {
         // setImage(item)
@@ -70,33 +73,33 @@ function HomePage() {
                                     <ListItemIcon>
                                         <ManIcon fontSize="small" />
                                     </ListItemIcon>
-                                    <ListItemText onClick={() => filterState('Hombre')}>Hombre</ListItemText>
+                                    <ListItemText onClick={() => selectionCategories('Hombre')}>Hombre</ListItemText>
 
                                 </MenuItem>
                                 <MenuItem>
                                     <ListItemIcon>
                                         <WomanIcon fontSize="small" />
                                     </ListItemIcon>
-                                    <ListItemText onClick={() => filterState('Mujer')}>Mujer</ListItemText>
+                                    <ListItemText onClick={() => selectionCategories('Mujer')}>Mujer</ListItemText>
 
                                 </MenuItem>
                                 <MenuItem>
                                     <ListItemIcon>
                                         <ChildCareIcon fontSize="small" />
                                     </ListItemIcon>
-                                    <ListItemText onClick={() => filterState('Niños')}>Niños</ListItemText>
+                                    <ListItemText onClick={() => selectionCategories('Niños')}>Niños</ListItemText>
                                 </MenuItem>
                                 <MenuItem>
                                     <ListItemIcon>
                                         <SportsBaseballIcon fontSize="small" />
                                     </ListItemIcon>
-                                    <ListItemText onClick={() => filterState('Deportivo')}>Deportivo</ListItemText>
+                                    <ListItemText onClick={() => selectionCategories('Deportivo')}>Deportivo</ListItemText>
                                 </MenuItem>
                                 <MenuItem>
                                     <ListItemIcon>
                                         <LoyaltyIcon fontSize="small" />
                                     </ListItemIcon>
-                                    <ListItemText onClick={() => filterState('Sale')}>SALE</ListItemText>
+                                    <ListItemText onClick={() => selectionCategories('Sale')}>SALE</ListItemText>
                                 </MenuItem>
                                 <Divider />
                                 <Typography sx={{ textAlign: 'center' }}>Indumentaria</Typography>
@@ -105,90 +108,70 @@ function HomePage() {
                                     <ListItemIcon>
                                         <KeyboardCommandKeyIcon fontSize="small" />
                                     </ListItemIcon>
-                                    <ListItemText>Remeras</ListItemText>
+                                    <ListItemText onClick={() => selectionCategories('Remeras')}>Remeras</ListItemText>
                                 </MenuItem>
                                 <MenuItem>
                                     <ListItemIcon>
                                         <KeyboardCommandKeyIcon fontSize="small" />
                                     </ListItemIcon>
-                                    <ListItemText>Pantalones</ListItemText>
+                                    <ListItemText onClick={() => selectionCategories('Pantalones')}>Pantalones</ListItemText>
                                 </MenuItem>
                                 <MenuItem>
                                     <ListItemIcon>
                                         <KeyboardCommandKeyIcon fontSize="small" />
                                     </ListItemIcon>
-                                    <ListItemText>Calzados</ListItemText>
+                                    <ListItemText onClick={() => selectionCategories('Calzados')}>Calzados</ListItemText>
                                 </MenuItem>
                                 <MenuItem>
                                     <ListItemIcon>
                                         <KeyboardCommandKeyIcon fontSize="small" />
                                     </ListItemIcon>
-                                    <ListItemText>Abrigos</ListItemText>
+                                    <ListItemText onClick={() => selectionCategories('Abrigos')}>Abrigos</ListItemText>
                                 </MenuItem>
                                 <MenuItem>
                                     <ListItemIcon>
                                         <KeyboardCommandKeyIcon fontSize="small" />
                                     </ListItemIcon>
-                                    <ListItemText>Ropa interior</ListItemText>
+                                    <ListItemText onClick={() => selectionCategories('RopaInterior')}>Ropa interior</ListItemText>
                                 </MenuItem>
                                 <Divider />
                                 <Typography sx={{ textAlign: 'center' }}>Información</Typography>
                                 <Divider />
                                 <MenuItem>
-                                    <ListItemIcon>
+                                    <ListItemIcon >
                                         <InfoIcon fontSize="small" />
                                     </ListItemIcon>
-                                    <ListItemText>Sobre Nosotros</ListItemText>
+                                    <ListItemText onClick={handleAbout}>Sobre Nosotros</ListItemText>
                                 </MenuItem>
                                 <MenuItem>
                                     <ListItemIcon>
                                         <ContactsIcon fontSize="small" />
                                     </ListItemIcon>
-                                    <ListItemText>Contactanos</ListItemText>
+                                    <ListItemText onClick={handleContact}>Contactanos</ListItemText>
                                 </MenuItem>
                             </MenuList>
                         </Paper>
                     </Grid>
                     <Grid item xs={9} sx={{ p: 2 }}>
                         <ImageList sx={{ width: '100%', height: '100%' }} cols={4}>
-                            {state !== '' ?
-                                resultItem.map((item) => (
-                                    <Button key={item.img} onClick={() => handleOpen(item)}>
+                            {itemData.map((item) => (
+                                <Button key={item.img} onClick={() => handleOpen(item)} >
 
-                                        <ImageListItem sx={{ width: '100%', height: '100%' }}>
-                                            <img
-                                                srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                                src={`${item.img}?w=248&fit=crop&auto=format`}
-                                                alt={item.title}
-                                                loading="lazy"
-                                            />
-                                            <ImageListItemBar
-                                                title={item.description}
-                                                subtitle={<Typography>$ {item.price}</Typography>}
+                                    <ImageListItem sx={{ width: '100%', height: '100%' }}>
+                                        <img
+                                            srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                            src={`${item.img}?w=248&fit=crop&auto=format`}
+                                            alt={item.title}
+                                            loading="lazy"
+                                        />
+                                        <ImageListItemBar
+                                            title={item.description}
+                                            subtitle={<Typography>$ {item.price}</Typography>}
 
-                                            />
-                                        </ImageListItem>
-                                    </Button>
-                                ))
-                                :
-                                itemData.map((item) => (
-                                    <Button key={item.img} onClick={() => handleOpen(item)}>
-
-                                        <ImageListItem sx={{ width: '100%', height: '100%' }}>
-                                            <img
-                                                srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                                src={`${item.img}?w=248&fit=crop&auto=format`}
-                                                alt={item.title}
-                                                loading="lazy"
-                                            />
-                                            <ImageListItemBar
-                                                title={item.description}
-                                                subtitle={<Typography>$ {item.price} </Typography>}
-
-                                            />
-                                        </ImageListItem>
-                                    </Button>
-                                ))
+                                        />
+                                    </ImageListItem>
+                                </Button>
+                            ))
                             }
                         </ImageList>
 
@@ -199,40 +182,22 @@ function HomePage() {
                     <Grid item xs={1}></Grid>
                     <Grid item xs={10}>
                         <ImageList sx={{ width: '100%', height: '100%' }} cols={4}>
-                            {state !== '' ?
-                                resultItem.map((item) => (
-                                    <Button key={item.img} onClick={() => handleOpen(item)}>
-                                        <ImageListItem sx={{ width: '100%', height: '100%' }}>
-                                            <img
-                                                srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                                src={`${item.img}?w=248&fit=crop&auto=format`}
-                                                alt={item.title}
-                                                loading="lazy"
-                                            />
-                                            <ImageListItemBar
-                                                title={item.description}
-                                                subtitle={<Typography>$ {item.price}</Typography>}
-                                            />
-                                        </ImageListItem>
-                                    </Button>
-                                ))
-                                :
-                                itemData.map((item) => (
-                                    <Button key={item.img} onClick={() => handleOpen(item)}>
-                                        <ImageListItem sx={{ width: '100%', height: '100%' }}>
-                                            <img
-                                                srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                                src={`${item.img}?w=248&fit=crop&auto=format`}
-                                                alt={item.title}
-                                                loading="lazy"
-                                            />
-                                            <ImageListItemBar
-                                                title={item.description}
-                                                subtitle={<Typography>$ {item.price}</Typography>}
-                                            />
-                                        </ImageListItem>
-                                    </Button>
-                                ))
+                            {itemData.map((item) => (
+                                <Button key={item.img} onClick={() => handleOpen(item)}>
+                                    <ImageListItem sx={{ width: '100%', height: '100%' }}>
+                                        <img
+                                            srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                            src={`${item.img}?w=248&fit=crop&auto=format`}
+                                            alt={item.title}
+                                            loading="lazy"
+                                        />
+                                        <ImageListItemBar
+                                            title={item.description}
+                                            subtitle={<Typography>$ {item.price}</Typography>}
+                                        />
+                                    </ImageListItem>
+                                </Button>
+                            ))
                             }
                         </ImageList>
                     </Grid>
@@ -250,37 +215,37 @@ const itemData = [
     {
         img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
         title: 'Hombre',
-        description: 'fdghfdhjk fghdsf',
+        description: 'Remeras',
         price: 135
     },
     {
         img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
         title: 'Mujer',
-        description: 'fghkhglty df',
+        description: 'Remeras',
         price: 135
     },
     {
         img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
         title: 'Mujer',
-        description: ' fghjfgkf gjhfghj',
+        description: ' Calzados',
         price: 135
     },
     {
         img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
         title: 'Niños',
-        description: 'fg hjfghj fhg',
+        description: 'Calzados',
         price: 135
     },
     {
         img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
         title: 'Deportivo',
-        description: ' dfghjgfj jkgh',
+        description: 'Abrigos',
         price: 135
     },
     {
         img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
         title: 'Sale',
-        description: ' asdfh sdfg ',
+        description: 'Abrigos',
         price: 135
     },
     {
