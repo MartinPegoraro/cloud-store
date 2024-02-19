@@ -3,7 +3,7 @@ import Header from '../../../components/Header'
 import NavBar from '../../../components/NavBar'
 import About from '../../../components/About'
 
-function Index() {
+export default function AboutMe() {
     return (
         <>
             <Header />
@@ -13,4 +13,3 @@ function Index() {
     )
 }
 
-export default Index

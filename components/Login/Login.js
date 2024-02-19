@@ -57,23 +57,6 @@ function Login() {
                                 </ImageListItem>
                             ))}
                         </ImageList>
-
-                        {/* 
-                        {images.map((img, index) => {
-                            return (
-                                <Grid key={index} item xs={4} sx={{ height: '40vh', p: 1 }}>
-                                    <img
-                                        className={style.imgLogin}
-                                        src={img.url}
-                                        alt='img'
-                                    />
-                                </Grid>
-                            )
-                        })
-
-                        } */}
-
-
                     </Grid>
 
                 </Grid>

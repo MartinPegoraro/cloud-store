@@ -3,7 +3,7 @@ import Header from '../../../components/Header'
 import NavBar from '../../../components/NavBar'
 import Contact from '../../../components/Contact'
 
-function Index() {
+export default function ContactMe() {
     return (
         <>
             <Header />
@@ -12,5 +12,3 @@ function Index() {
         </>
     )
 }
-
-export default Index

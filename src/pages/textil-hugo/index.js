@@ -3,7 +3,8 @@ import Header from '../../../components/Header'
 import HomePage from '../../../components/HomePage/HomePage'
 import NavBar from '../../../components/NavBar'
 
-function Index() {
+
+export default function Index() {
     return (
         <>
             <Header />
@@ -12,5 +13,3 @@ function Index() {
         </>
     )
 }
-
-export default Index
