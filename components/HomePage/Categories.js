@@ -19,56 +19,119 @@ import {
 } from '@mui/material'
 import ManIcon from '@mui/icons-material/Man';
 import { useRouter } from 'next/router';
+import axios from 'axios';
+
 
 export default function Categories() {
     const [clothing, setClothing] = useState([])
     const [routerQuery, setRouterQuery] = useState([])
     const [showClothes, setShowClothes] = useState([])
     const [prevStateClothes, setPrevStateClothes] = useState([])
-
+    const [dummyData, setDummyData] = useState([])
 
     const [checkedTshirt, setCheckedTshirt] = useState(false);
     const [checkedPants, setCheckedPants] = useState(false);
     const [checkedShoe, setCheckedShoe] = useState(false);
 
     const router = useRouter()
-    console.log(prevStateClothes, 'prevStateClothes');
-    // console.log(showClothes, 'showClothes');
 
     const handleChange = (e) => {
         const { checked, value } = e.target
 
-        if (value === 'Remeras') {
-            if (checked) {
-                const newClothing = clothing.filter((cloth) => {
-                    return cloth.description === value
-                })
-                setPrevStateClothes(showClothes)
-                setShowClothes(prevClothes => [...prevClothes, ...newClothing]);
-            } else {
-                setShowClothes(prevStateClothes)
-            }
-            setCheckedTshirt(checked)
-        } else if (value === 'Pantalones') {
-            if (checked) {
-                const newClothing = clothing.filter((cloth) => {
-                    return cloth.description === value
-                })
-                setShowClothes(prevClothes => [...prevClothes, ...newClothing]);
-            }
-            setCheckedPants(checked)
-        } else if (value === 'Zapatillas') {
-            if (checked) {
-                const newClothing = clothing.filter((cloth) => {
-                    return cloth.description === value
-                })
-                setShowClothes(prevClothes => [...prevClothes, ...newClothing]);
-            }
-            setCheckedShoe(checked)
+        const filterClothes = (description) => {
+            const newClothing = clothing.filter((cloth) => cloth.description === description);
+            setShowClothes(prevClothes => [...prevClothes, ...newClothing]);
         }
+
+        switch (value) {
+            case 'Remeras':
+                setShowClothes([]);
+                if (checked) {
+                    filterClothes(value);
+                    if (checkedPants) filterClothes('Pantalones');
+                    if (checkedShoe) filterClothes('Zapatillas');
+                } else {
+                    if (!checkedPants && !checkedShoe) {
+                        setShowClothes(clothing);
+                    } else {
+                        if (checkedPants) filterClothes('Pantalones');
+                        if (checkedShoe) filterClothes('Zapatillas');
+                    }
+                }
+                setCheckedTshirt(checked);
+                break;
+            case 'Pantalones':
+                setShowClothes([]);
+                if (checked) {
+                    filterClothes(value);
+                    if (checkedTshirt) filterClothes('Remeras');
+                    if (checkedShoe) filterClothes('Zapatillas');
+                } else {
+                    if (!checkedTshirt && !checkedShoe) {
+                        setShowClothes(clothing);
+                    } else {
+                        if (checkedTshirt) filterClothes('Remeras');
+                        if (checkedShoe) filterClothes('Zapatillas');
+                    }
+                }
+                setCheckedPants(checked);
+                break;
+            case 'Zapatillas':
+                setShowClothes([]);
+                if (checked) {
+                    filterClothes(value);
+                    if (checkedTshirt) filterClothes('Remeras');
+                    if (checkedPants) filterClothes('Pantalones');
+                } else {
+                    if (!checkedTshirt && !checkedPants) {
+                        setShowClothes(clothing);
+                    } else {
+                        if (checkedTshirt) filterClothes('Remeras');
+                        if (checkedPants) filterClothes('Pantalones');
+                    }
+                }
+                setCheckedShoe(checked);
+                break;
+            default:
+                return;
+        }
+
+        // if (value === 'Remeras') {
+        //     if (checked) {
+        //         const newClothing = clothing.filter((cloth) => {
+        //             return cloth.description === value
+        //         })
+        //         setPrevStateClothes(showClothes)
+        //         setShowClothes(prevClothes => [...prevClothes, ...newClothing]);
+        //     } else {
+        //         setShowClothes(prevStateClothes)
+        //     }
+        //     setCheckedTshirt(checked)
+        // } else if (value === 'Pantalones') {
+        //     if (checked) {
+        //         const newClothing = clothing.filter((cloth) => {
+        //             return cloth.description === value
+        //         })
+        //         setShowClothes(prevClothes => [...prevClothes, ...newClothing]);
+        //     }
+        //     setCheckedPants(checked)
+        // } else if (value === 'Zapatillas') {
+        //     if (checked) {
+        //         const newClothing = clothing.filter((cloth) => {
+        //             return cloth.description === value
+        //         })
+        //         setShowClothes(prevClothes => [...prevClothes, ...newClothing]);
+        //     }
+        //     setCheckedShoe(checked)
+        // }
     };
 
-    useEffect(() => {
+    // const fetchData = async () => {
+    //     const res = await axios.get('api/dummyData')
+
+    // }
+    const fetchData = async () => {
+        const res = await axios.get('/api/dummyData')
         let queries = router.query.id
         const result = itemData
             .filter((item) => item.title === queries || item.description === queries)
@@ -83,7 +146,14 @@ export default function Categories() {
         setRouterQuery(queries)
         setPrevStateClothes(result)
         setClothing(result)
-    }, [router.query.id])
+        setDummyData(res.data)
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, [])
+
+    console.log(dummyData);
 
     return (
         <>

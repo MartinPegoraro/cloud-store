@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
 import {
     Grid,
     Paper,
@@ -28,9 +28,11 @@ import ModalImg from './ModalImg';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
+
 function HomePage() {
     const [open, setOpen] = useState(false);
     const [image, setImage] = useState({});
+    const [dummyData, setDummyData] = useState([])
     const openMenu = useSelector(selectMenuVisibility)
     const router = useRouter()
 
@@ -46,13 +48,23 @@ function HomePage() {
 
     const handleContact = () => {
         router.push('/textil-hugo/contact')
+
     }
 
     const handleOpen = (item) => {
-        // setImage(item)
-        setOpen(true);
+        router.push({ pathname: `/textil-hugo/product/[id]`, query: { id: item.id } })
     }
     const handleClose = () => setOpen(false);
+
+    const fetchData = async () => {
+        const res = await axios.get('api/dummyData')
+        setDummyData(res.data)
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, [])
+
     return (
         <>
             <ModalImg
@@ -154,7 +166,7 @@ function HomePage() {
                     </Grid>
                     <Grid item xs={9} sx={{ p: 2 }}>
                         <ImageList sx={{ width: '100%', height: '100%' }} cols={4}>
-                            {itemData.map((item) => (
+                            {dummyData.map((item) => (
                                 <Button key={item.img} onClick={() => handleOpen(item)} >
 
                                     <ImageListItem sx={{ width: '100%', height: '100%' }}>
@@ -182,7 +194,7 @@ function HomePage() {
                     <Grid item xs={1}></Grid>
                     <Grid item xs={10}>
                         <ImageList sx={{ width: '100%', height: '100%' }} cols={4}>
-                            {itemData.map((item) => (
+                            {dummyData.map((item) => (
                                 <Button key={item.img} onClick={() => handleOpen(item)}>
                                     <ImageListItem sx={{ width: '100%', height: '100%' }}>
                                         <img
@@ -210,78 +222,3 @@ function HomePage() {
 }
 
 export default HomePage
-
-const itemData = [
-    {
-        img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-        title: 'Hombre',
-        description: 'Remeras',
-        price: 135
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-        title: 'Mujer',
-        description: 'Remeras',
-        price: 135
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-        title: 'Mujer',
-        description: ' Calzados',
-        price: 135
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-        title: 'Niños',
-        description: 'Calzados',
-        price: 135
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-        title: 'Deportivo',
-        description: 'Abrigos',
-        price: 135
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-        title: 'Sale',
-        description: 'Abrigos',
-        price: 135
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-        title: 'Sale',
-        description: 'sdf asdfdfg d',
-        price: 135
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-        title: 'Hombre',
-        description: ' asdfasd h sdfh ',
-        price: 135
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-        title: 'Hombre',
-        description: '',
-        price: 135
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-        title: 'Mujer',
-        description: 'asdas asdf sdfgs ',
-        price: 135
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
-        title: 'Sea star',
-        description: ' asdfasdg sdf hsfd h',
-        price: 135
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-        title: 'Bike',
-        description: ' sdafas hsfg hj',
-        price: 135
-    },
-];

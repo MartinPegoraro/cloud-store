@@ -25,6 +25,9 @@ export default function NavBar() {
     const handleBack = () => {
         router.back()
     }
+    const handleBackMenu = () => {
+        router.push('/textil-hugo')
+    }
 
     const handleMenuClick = () => {
         if (!openMenu) {
@@ -67,7 +70,7 @@ export default function NavBar() {
                             }
                         </Grid>
                         <Grid item xs={4} sx={{ textAlign: 'center' }}>
-                            <IconButton size='small'>
+                            <IconButton size='small' onClick={handleBackMenu}>
                                 <Avatar
                                     alt="TextilHugo"
                                     src="/textil-hugo.png"
