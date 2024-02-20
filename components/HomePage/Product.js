@@ -8,8 +8,16 @@ function Product() {
 
     const [idProduct, setIdProduct] = useState()
     const [product, setProduct] = useState()
-
+    const [imgIndex, setImgIndex] = useState(0)
     const router = useRouter()
+
+    const goBack = () => {
+        setImgIndex(oldIndex => (oldIndex > 0 ? oldIndex - 1 : oldIndex));
+    };
+
+    const goForward = () => {
+        setImgIndex(oldIndex => (oldIndex >= product?.img?.length - 1 ? oldIndex : oldIndex + 1));
+    };
 
     const fetchData = async () => {
         const queries = Number(router.query.id)
@@ -22,6 +30,7 @@ function Product() {
         fetchData()
     }, [idProduct])
 
+
     return (
         <>
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -29,8 +38,7 @@ function Product() {
                     <Grid item xs={6}>
                         <Grid container>
                             <Grid item xs={0.5} sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <Button>
-
+                                <Button onClick={goBack}>
                                     <ArrowBackIosIcon />
                                 </Button>
                             </Grid>
@@ -39,14 +47,19 @@ function Product() {
                                     <CardMedia
                                         component="img"
                                         alt={product?.title}
-                                        image={product?.img}
+                                        image={product?.img[imgIndex]?.img}
                                         title={product?.title}
+                                        sx={{
+                                            transition: 'transform 0.9s',
+                                            '&:hover': {
+                                                transform: 'scale(1.2)',
+                                            },
+                                        }}
                                     />
                                 </Card>
                             </Grid>
                             <Grid item xs={0.5} sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <Button>
-
+                                <Button onClick={goForward}>
                                     <ArrowForwardIosIcon />
                                 </Button>
                             </Grid>

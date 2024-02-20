@@ -167,12 +167,11 @@ function HomePage() {
                     <Grid item xs={9} sx={{ p: 2 }}>
                         <ImageList sx={{ width: '100%', height: '100%' }} cols={4}>
                             {dummyData.map((item) => (
-                                <Button key={item.img} onClick={() => handleOpen(item)} >
-
+                                <Button key={item.id} onClick={() => handleOpen(item)} >
                                     <ImageListItem sx={{ width: '100%', height: '100%' }}>
                                         <img
-                                            srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                            src={`${item.img}?w=248&fit=crop&auto=format`}
+                                            srcSet={`${item.miniature}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                            src={`${item.miniature}?w=248&fit=crop&auto=format`}
                                             alt={item.title}
                                             loading="lazy"
                                         />
@@ -195,11 +194,11 @@ function HomePage() {
                     <Grid item xs={10}>
                         <ImageList sx={{ width: '100%', height: '100%' }} cols={4}>
                             {dummyData.map((item) => (
-                                <Button key={item.img} onClick={() => handleOpen(item)}>
+                                <Button key={item.id} onClick={() => handleOpen(item)}>
                                     <ImageListItem sx={{ width: '100%', height: '100%' }}>
                                         <img
-                                            srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                            src={`${item.img}?w=248&fit=crop&auto=format`}
+                                            srcSet={`${item.miniature}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                            src={`${item.miniature}?w=248&fit=crop&auto=format`}
                                             alt={item.title}
                                             loading="lazy"
                                         />
