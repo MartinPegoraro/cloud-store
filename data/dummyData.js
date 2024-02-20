@@ -15,7 +15,8 @@ export const dummyData = [
         ],
         title: 'Hombre',
         description: 'Remeras',
-        price: 100
+        price: 100,
+        date: '2024-12-5'
     },
     {
         id: 2,
@@ -33,7 +34,8 @@ export const dummyData = [
         ],
         title: 'Mujer',
         description: 'Remeras',
-        price: 140
+        price: 140,
+        date: '2024-12-12'
     },
     {
         id: 3,
@@ -41,7 +43,8 @@ export const dummyData = [
         img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
         title: 'Mujer',
         description: ' Calzados',
-        price: 222
+        price: 222,
+        date: '2023-12-11'
     },
     {
         id: 4,
@@ -49,7 +52,8 @@ export const dummyData = [
         img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
         title: 'Niños',
         description: 'Calzados',
-        price: 67567
+        price: 67567,
+        date: '2024-12-2'
     },
     {
         id: 5,
@@ -57,7 +61,8 @@ export const dummyData = [
         img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
         title: 'Deportivo',
         description: 'Abrigos',
-        price: 890678
+        price: 890678,
+        date: '2023-1-12'
     },
     {
         id: 6,
@@ -65,7 +70,8 @@ export const dummyData = [
         img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
         title: 'Sale',
         description: 'Abrigos',
-        price: 345345
+        price: 345345,
+        date: '2023-1-1'
     },
     {
         id: 7,
@@ -73,7 +79,8 @@ export const dummyData = [
         img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
         title: 'Sale',
         description: 'sdf asdfdfg d',
-        price: 345345
+        price: 345345,
+        date: '2023-12-5'
     },
     {
         id: 8,
@@ -81,7 +88,8 @@ export const dummyData = [
         img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
         title: 'Hombre',
         description: 'Remeras',
-        price: 345347
+        price: 345347,
+        date: '2023-2-3'
     },
     {
         id: 9,
@@ -89,7 +97,8 @@ export const dummyData = [
         img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
         title: 'Hombre',
         description: 'Pantalones',
-        price: 345
+        price: 345,
+        date: '2024-12-1'
     },
     {
         id: 10,
@@ -97,7 +106,8 @@ export const dummyData = [
         img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
         title: 'Mujer',
         description: 'asdas asdf sdfgs ',
-        price: 457
+        price: 457,
+        date: '2023-12-8'
     },
     {
         id: 11,
@@ -105,7 +115,8 @@ export const dummyData = [
         img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
         title: 'Hombre',
         description: 'Zapatillas',
-        price: 234
+        price: 234,
+        date: '2023-12-7'
     },
     {
         id: 12,
@@ -113,6 +124,7 @@ export const dummyData = [
         img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
         title: 'Hombre',
         description: 'Invierno',
-        price: 4566
+        price: 4566,
+        date: '2024-2-9'
     },
 ];

@@ -37,6 +37,7 @@ export default function Categories() {
     const handleOpen = (item) => {
         router.push({ pathname: `/textil-hugo/product/[id]`, query: { id: item.id } })
     }
+
     const handleChange = (e) => {
         const { checked, value } = e.target
 
@@ -97,9 +98,7 @@ export default function Categories() {
             default:
                 return;
         }
-
     };
-
 
     const fetchData = async () => {
         const res = await axios.get('/api/dummyData')
@@ -188,12 +187,12 @@ export default function Categories() {
                     <ImageList sx={{ width: '100%', height: '100%' }} cols={4}>
                         {showClothes.length === 0 ?
                             clothing?.map((item) => (
-                                <Button key={item.img} onClick={() => handleOpen(item)} >
+                                <Button key={item.id} onClick={() => handleOpen(item)} >
 
                                     <ImageListItem sx={{ width: '100%', height: '100%' }}>
                                         <img
-                                            srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                            src={`${item.img}?w=248&fit=crop&auto=format`}
+                                            srcSet={`${item.miniature}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                            src={`${item.miniature}?w=248&fit=crop&auto=format`}
                                             alt={item.title}
                                             loading="lazy"
                                         />
@@ -207,12 +206,12 @@ export default function Categories() {
                             ))
                             :
                             showClothes?.map((item) => (
-                                <Button key={item.img} onClick={() => handleOpen(item)} >
+                                <Button key={item.id} onClick={() => handleOpen(item)} >
 
                                     <ImageListItem sx={{ width: '100%', height: '100%' }}>
                                         <img
-                                            srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                            src={`${item.img}?w=248&fit=crop&auto=format`}
+                                            srcSet={`${item.miniature}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                            src={`${item.miniature}?w=248&fit=crop&auto=format`}
                                             alt={item.title}
                                             loading="lazy"
                                         />
