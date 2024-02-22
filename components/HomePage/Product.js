@@ -13,7 +13,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { toggleVerifyShoppingCart, toggleShoppingCart, productsShoppingCart } from '../Redux/ShoppingCart';
+import { toggleVerifyShoppingCart, toggleShoppingCartAddProduct, productsShoppingCart } from '../Redux/ShoppingCart';
 function Product() {
 
     const [idProduct, setIdProduct] = useState()
@@ -34,7 +34,7 @@ function Product() {
 
     const handleAddCart = (product) => {
         console.log(product.miniature);
-        dispatch(toggleShoppingCart({ products: { price: product?.price, description: product?.description, miniature: product?.miniature, id: product.id } }))
+        dispatch(toggleShoppingCartAddProduct({ products: { price: product?.price, description: product?.description, miniature: product?.miniature, id: product.id } }))
         dispatch(toggleVerifyShoppingCart({ isTrue: true }))
         setAlertAddCart(true)
         setTimeout(() => {

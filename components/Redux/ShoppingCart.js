@@ -11,19 +11,26 @@ export const cartSlice = createSlice({
     reducers: {
         toggleVerifyShoppingCart: (state, { payload }) => {
             const { isTrue } = payload;
-            console.log(isTrue);
             state.isTrue = isTrue;
         },
-        toggleShoppingCart: (state, { payload }) => {
+        toggleShoppingCartAddProduct: (state, { payload }) => {
             const { products } = payload;
             state.products.push(products)
+        },
+        toggleShoppingCartDeleteProduct: (state, { payload }) => {
+            const { id } = payload;
+            state.products = state.products.filter(product => product.id !== id);
+            if (state.products.length <= 0) {
+                state.isTrue = false
+            }
         },
     },
 })
 
 export const {
     toggleVerifyShoppingCart,
-    toggleShoppingCart
+    toggleShoppingCartAddProduct,
+    toggleShoppingCartDeleteProduct
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
