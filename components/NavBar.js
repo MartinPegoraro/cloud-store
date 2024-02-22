@@ -7,7 +7,8 @@ import {
     Toolbar,
     Box,
     AppBar,
-    Avatar
+    Avatar,
+    Badge
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -15,12 +16,18 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { toggleMenuVisibility, selectMenuVisibility } from './Redux/MenuSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import { verifyShoppingCart, productsShoppingCart } from './Redux/ShoppingCart';
 
 export default function NavBar() {
 
     const dispatch = useDispatch()
     const openMenu = useSelector(selectMenuVisibility)
+    const verifyCart = useSelector(productsShoppingCart)
     const router = useRouter()
+
+    const amoutProductcart = verifyCart.length
+
+    const handleGoCart = () => { router.push('/textil-hugo/cart') }
 
     const handleBack = () => {
         router.back()
@@ -37,7 +44,6 @@ export default function NavBar() {
 
         }
     };
-
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -79,19 +85,10 @@ export default function NavBar() {
                             </IconButton>
                         </Grid>
                         <Grid item xs={3.9} sx={{ textAlign: 'right' }}>
-
-                            <ShoppingCartIcon fontSize='large' />
+                            <Badge badgeContent={amoutProductcart} color="error"  >
+                                <ShoppingCartIcon fontSize='large' onClick={handleGoCart} sx={{ cursor: 'pointer' }} />
+                            </Badge>
                         </Grid>
-                        <Grid item xs={0.1} sx={{ textAlign: 'right' }}>
-                            <Typography sx={{
-                                position: 'absolute',
-                                color: 'red',
-                                bottom: '30px',
-                                right: '50px',
-                                fontSize: 15,
-                            }}>1</Typography>
-                        </Grid>
-
                     </Grid>
                 </Toolbar>
             </AppBar>

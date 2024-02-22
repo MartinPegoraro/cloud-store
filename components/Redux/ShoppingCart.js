@@ -11,6 +11,7 @@ export const cartSlice = createSlice({
     reducers: {
         toggleVerifyShoppingCart: (state, { payload }) => {
             const { isTrue } = payload;
+            console.log(isTrue);
             state.isTrue = isTrue;
         },
         toggleShoppingCart: (state, { payload }) => {

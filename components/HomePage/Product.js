@@ -1,4 +1,12 @@
-import { Box, Card, Grid, Typography, CardMedia, Button } from '@mui/material'
+import {
+    Box,
+    Card,
+    Grid,
+    Typography,
+    CardMedia,
+    Button,
+    Alert
+} from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios'
 import { useRouter } from 'next/router'
@@ -11,10 +19,10 @@ function Product() {
     const [idProduct, setIdProduct] = useState()
     const [product, setProduct] = useState()
     const [imgIndex, setImgIndex] = useState(0)
+    const [alertAddCart, setAlertAddCart] = useState(false)
     const router = useRouter()
     const productsRedux = useSelector(productsShoppingCart);
     const dispatch = useDispatch();
-
 
     const goBack = () => {
         setImgIndex(oldIndex => (oldIndex > 0 ? oldIndex - 1 : oldIndex));
@@ -25,7 +33,13 @@ function Product() {
     };
 
     const handleAddCart = (product) => {
-        dispatch(toggleShoppingCart({ products: { price: product.price, description: product.description } }))
+        console.log(product.miniature);
+        dispatch(toggleShoppingCart({ products: { price: product?.price, description: product?.description, miniature: product?.miniature, id: product.id } }))
+        dispatch(toggleVerifyShoppingCart({ isTrue: true }))
+        setAlertAddCart(true)
+        setTimeout(() => {
+            setAlertAddCart(false)
+        }, 3000);
     }
 
     const fetchData = async () => {
@@ -82,7 +96,12 @@ function Product() {
                         <Button variant="contained" sx={{ m: 1, width: '50%' }}>Comprar ahora</Button>
                         <br />
                         <Button variant="contained" sx={{ m: 1, width: '50%' }} onClick={() => handleAddCart(product)}>Agregar al carrito</Button>
-
+                        {
+                            alertAddCart &&
+                            <Alert sx={{ p: 0, ml: 1, width: '50%', height: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <Typography fontSize={'small'} sx={{ textAlign: 'center' }}>Se agrego correctamente</Typography>
+                            </Alert>
+                        }
                     </Grid>
                 </Grid>
 
