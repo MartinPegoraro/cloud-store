@@ -10,23 +10,39 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import ButtonImgList from './ButtonImgList';
 import MenuOpen from './MenuOpen';
+import { productApi } from '../../src/pages/api/allApi'
 
 
 function HomePage() {
     const [open, setOpen] = useState(false);
     const [image, setImage] = useState({});
     const [dummyData, setDummyData] = useState([])
+    const [realData, setRealData] = useState([])
+
     const openMenu = useSelector(selectMenuVisibility)
     const router = useRouter()
 
+    // const fetchData = async () => {
+    //     const res = await axios.get('api/dummyData')
+    //     setDummyData(res.data)
+    // }
     const fetchData = async () => {
-        const res = await axios.get('api/dummyData')
-        setDummyData(res.data)
-    }
+        try {
+            const res = await axios.get('api/dummyData')
+            setDummyData(res.data)
+            const resAllSize = await productApi.getAllSize();
+            setRealData(resAllSize.data);
+        } catch (error) {
+            console.error('Error al obtener los datos:', error);
+        }
+    };
+
+
 
     useEffect(() => {
         fetchData();
     }, [])
+    // console.error(realData);
 
     return (
         <>
