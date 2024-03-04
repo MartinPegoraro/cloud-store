@@ -28,10 +28,10 @@ function HomePage() {
     // }
     const fetchData = async () => {
         try {
-            const res = await axios.get('api/dummyData')
-            setDummyData(res.data)
-            const resAllSize = await productApi.getAllSize();
-            setRealData(resAllSize.data);
+            // const res = await axios.get('api/dummyData')
+            // setDummyData(res.data)
+            const resAllSize = await productApi.getAllProduct();
+            setRealData(resAllSize.data.data);
         } catch (error) {
             console.error('Error al obtener los datos:', error);
         }
@@ -42,7 +42,7 @@ function HomePage() {
     useEffect(() => {
         fetchData();
     }, [])
-    // console.error(realData);
+    console.error(realData);
 
     return (
         <>
@@ -54,8 +54,8 @@ function HomePage() {
                     <Grid item xs={9} sx={{ p: 1 }}>
                         <Typography sx={{ textAlign: 'center', color: 'white', background: 'red', width: '25%', margin: 'auto' }}>Nuevos ingresos</Typography>
                         <ImageList sx={{ width: '100%', }} cols={5}>
-                            {dummyData
-                                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                            {realData
+                                .sort((a, b) => new Date(b.product_upload_date) - new Date(a.product_upload_date))
                                 .slice(0, 5)
                                 .map((item) => (
                                     <ButtonImgList
@@ -67,8 +67,8 @@ function HomePage() {
                         </ImageList>
                         <Typography sx={{ textAlign: 'center', color: 'white', background: 'red', width: '25%', margin: 'auto' }}>LO MAS VENDIDO</Typography>
                         <ImageList sx={{ width: '100%' }} cols={5}>
-                            {dummyData
-                                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                            {realData
+                                .sort((a, b) => new Date(b.product_upload_date) - new Date(a.product_upload_date))
                                 .slice(0, 5)
                                 .map((item) => (
                                     <ButtonImgList
@@ -80,7 +80,7 @@ function HomePage() {
                         </ImageList>
                         <Typography sx={{ textAlign: 'center', color: 'white', background: 'red', width: '25%', margin: 'auto' }}>TODOS LOS PRODUCTOS</Typography>
                         <ImageList sx={{ width: '100%' }} cols={5}>
-                            {dummyData.map((item) => (
+                            {realData.map((item) => (
                                 <ButtonImgList
                                     key={item.id}
                                     item={item}
@@ -98,9 +98,9 @@ function HomePage() {
                         <Grid item xs={10}>
                             <Typography sx={{ textAlign: 'center', color: 'white', background: 'red', width: '25%', margin: 'auto' }}>Nuevos ingresos</Typography>
 
-                            <ImageList sx={{ width: '100%', }} cols={4}>
-                                {dummyData
-                                    .sort((a, b) => new Date(b.date) - new Date(a.date))
+                            <ImageList sx={{ width: '100%', }} cols={5}>
+                                {realData
+                                    .sort((a, b) => new Date(b.product_upload_date) - new Date(a.product_upload_date))
                                     .slice(0, 5)
                                     .map((item) => (
                                         <ButtonImgList
@@ -118,9 +118,9 @@ function HomePage() {
                         <Grid item xs={1}></Grid>
                         <Grid item xs={10}>
                             <Typography sx={{ textAlign: 'center', color: 'white', background: 'red', width: '25%', margin: 'auto' }}>LO MAS VENDIDO</Typography>
-                            <ImageList sx={{ width: '100%', }} cols={4}>
-                                {dummyData
-                                    .sort((a, b) => new Date(b.date) - new Date(a.date))
+                            <ImageList sx={{ width: '100%' }} cols={5}>
+                                {realData
+                                    .sort((a, b) => new Date(b.product_upload_date) - new Date(a.product_upload_date))
                                     .slice(0, 5)
                                     .map((item) => (
                                         <ButtonImgList
