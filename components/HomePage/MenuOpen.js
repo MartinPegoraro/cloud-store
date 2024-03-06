@@ -31,7 +31,7 @@ export default function MenuOpen() {
 
     const selectionCategories = (selection) => {
         router.push({
-            pathname: `/textil-hugo/categories/${selection}`,
+            pathname: `/textil-hugo/choice/${selection}`,
         })
     }
 
@@ -53,32 +53,32 @@ export default function MenuOpen() {
                         <ListItemIcon>
                             <ManIcon fontSize="small" />
                         </ListItemIcon>
-                        <ListItemText onClick={() => selectionCategories('Hombre')}>Hombre</ListItemText>
+                        <ListItemText onClick={() => selectionCategories('category-hombre')}>Hombre</ListItemText>
 
                     </MenuItem>
                     <MenuItem>
                         <ListItemIcon>
                             <WomanIcon fontSize="small" />
                         </ListItemIcon>
-                        <ListItemText onClick={() => selectionCategories('Mujer')}>Mujer</ListItemText>
+                        <ListItemText onClick={() => selectionCategories('category-mujer')}>Mujer</ListItemText>
                     </MenuItem>
                     <MenuItem>
                         <ListItemIcon>
                             <ChildCareIcon fontSize="small" />
                         </ListItemIcon>
-                        <ListItemText onClick={() => selectionCategories('Niños')}>Niños</ListItemText>
+                        <ListItemText onClick={() => selectionCategories('category-niño')}>Niños</ListItemText>
                     </MenuItem>
                     <MenuItem>
                         <ListItemIcon>
                             <SportsBaseballIcon fontSize="small" />
                         </ListItemIcon>
-                        <ListItemText onClick={() => selectionCategories('Deportivo')}>Deportivo</ListItemText>
+                        <ListItemText onClick={() => selectionCategories('category-deportivo')}>Deportivo</ListItemText>
                     </MenuItem>
                     <MenuItem>
                         <ListItemIcon>
                             <LoyaltyIcon fontSize="small" />
                         </ListItemIcon>
-                        <ListItemText onClick={() => selectionCategories('Sale')}>SALE</ListItemText>
+                        <ListItemText onClick={() => selectionCategories('category-sale')}>SALE</ListItemText>
                     </MenuItem>
                     <Divider />
                     <Typography sx={{ textAlign: 'center' }}>Indumentaria</Typography>
@@ -87,31 +87,31 @@ export default function MenuOpen() {
                         <ListItemIcon>
                             <KeyboardCommandKeyIcon fontSize="small" />
                         </ListItemIcon>
-                        <ListItemText onClick={() => selectionCategories('Remeras')}>Remeras</ListItemText>
+                        <ListItemText onClick={() => selectionCategories('name-remera')}>Remeras</ListItemText>
                     </MenuItem>
                     <MenuItem>
                         <ListItemIcon>
                             <KeyboardCommandKeyIcon fontSize="small" />
                         </ListItemIcon>
-                        <ListItemText onClick={() => selectionCategories('Pantalones')}>Pantalones</ListItemText>
+                        <ListItemText onClick={() => selectionCategories('name-pantalon')}>Pantalones</ListItemText>
                     </MenuItem>
                     <MenuItem>
                         <ListItemIcon>
                             <KeyboardCommandKeyIcon fontSize="small" />
                         </ListItemIcon>
-                        <ListItemText onClick={() => selectionCategories('Calzados')}>Calzados</ListItemText>
+                        <ListItemText onClick={() => selectionCategories('name-calzado')}>Calzados</ListItemText>
                     </MenuItem>
                     <MenuItem>
                         <ListItemIcon>
                             <KeyboardCommandKeyIcon fontSize="small" />
                         </ListItemIcon>
-                        <ListItemText onClick={() => selectionCategories('Abrigos')}>Abrigos</ListItemText>
+                        <ListItemText onClick={() => selectionCategories('name-abrigo')}>Abrigos</ListItemText>
                     </MenuItem>
                     <MenuItem>
                         <ListItemIcon>
                             <KeyboardCommandKeyIcon fontSize="small" />
                         </ListItemIcon>
-                        <ListItemText onClick={() => selectionCategories('RopaInterior')}>Ropa interior</ListItemText>
+                        <ListItemText onClick={() => selectionCategories('name-interior')}>Ropa interior</ListItemText>
                     </MenuItem>
                     <Divider />
                     <Typography sx={{ textAlign: 'center' }}>Información</Typography>

@@ -31,7 +31,7 @@ function HomePage() {
             // const res = await axios.get('api/dummyData')
             // setDummyData(res.data)
             const resAllSize = await productApi.getAllProduct();
-            setRealData(resAllSize.data.data);
+            setRealData(resAllSize?.data);
         } catch (error) {
             console.error('Error al obtener los datos:', error);
         }
@@ -55,7 +55,7 @@ function HomePage() {
                         <Typography sx={{ textAlign: 'center', color: 'white', background: 'red', width: '25%', margin: 'auto' }}>Nuevos ingresos</Typography>
                         <ImageList sx={{ width: '100%', }} cols={5}>
                             {realData
-                                .sort((a, b) => new Date(b.product_upload_date) - new Date(a.product_upload_date))
+                                ?.sort((a, b) => new Date(b.product_upload_date) - new Date(a.product_upload_date))
                                 .slice(0, 5)
                                 .map((item) => (
                                     <ButtonImgList
@@ -68,7 +68,7 @@ function HomePage() {
                         <Typography sx={{ textAlign: 'center', color: 'white', background: 'red', width: '25%', margin: 'auto' }}>LO MAS VENDIDO</Typography>
                         <ImageList sx={{ width: '100%' }} cols={5}>
                             {realData
-                                .sort((a, b) => new Date(b.product_upload_date) - new Date(a.product_upload_date))
+                                ?.sort((a, b) => new Date(b.product_upload_date) - new Date(a.product_upload_date))
                                 .slice(0, 5)
                                 .map((item) => (
                                     <ButtonImgList
@@ -80,7 +80,7 @@ function HomePage() {
                         </ImageList>
                         <Typography sx={{ textAlign: 'center', color: 'white', background: 'red', width: '25%', margin: 'auto' }}>TODOS LOS PRODUCTOS</Typography>
                         <ImageList sx={{ width: '100%' }} cols={5}>
-                            {realData.map((item) => (
+                            {realData?.map((item) => (
                                 <ButtonImgList
                                     key={item.id}
                                     item={item}
@@ -100,7 +100,7 @@ function HomePage() {
 
                             <ImageList sx={{ width: '100%', }} cols={5}>
                                 {realData
-                                    .sort((a, b) => new Date(b.product_upload_date) - new Date(a.product_upload_date))
+                                    ?.sort((a, b) => new Date(b.product_upload_date) - new Date(a.product_upload_date))
                                     .slice(0, 5)
                                     .map((item) => (
                                         <ButtonImgList
@@ -120,7 +120,7 @@ function HomePage() {
                             <Typography sx={{ textAlign: 'center', color: 'white', background: 'red', width: '25%', margin: 'auto' }}>LO MAS VENDIDO</Typography>
                             <ImageList sx={{ width: '100%' }} cols={5}>
                                 {realData
-                                    .sort((a, b) => new Date(b.product_upload_date) - new Date(a.product_upload_date))
+                                    ?.sort((a, b) => new Date(b.product_upload_date) - new Date(a.product_upload_date))
                                     .slice(0, 5)
                                     .map((item) => (
                                         <ButtonImgList

@@ -14,10 +14,12 @@ import React, { useEffect, useState } from 'react'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { toggleVerifyShoppingCart, toggleShoppingCartAddProduct, productsShoppingCart } from '../Redux/ShoppingCart';
+import { productApi } from '@/pages/api/allApi';
 function Product() {
 
     const [idProduct, setIdProduct] = useState()
     const [product, setProduct] = useState()
+    const [sizes, setSizes] = useState()
     const [imgIndex, setImgIndex] = useState(0)
     const [alertAddCart, setAlertAddCart] = useState(false)
     const router = useRouter()
@@ -45,13 +47,18 @@ function Product() {
     const fetchData = async () => {
         const queries = Number(router.query.id)
         const res = await axios.get('/api/dummyData')
+        const result = await productApi.getProductInSize(queries)
         const garment = res?.data?.find(prod => prod.id === queries)
+        setProduct(result?.data?.data[0])
+        setSizes(result?.data?.data.size)
         setIdProduct(queries)
-        setProduct(garment)
     }
     useEffect(() => {
         fetchData()
     }, [idProduct])
+
+    console.log(product);
+    console.log(sizes);
 
 
     return (
@@ -70,7 +77,8 @@ function Product() {
                                     <CardMedia
                                         component="img"
                                         alt={product?.title}
-                                        image={product?.img[imgIndex]?.img}
+                                        image={product?.img}
+                                        // image={product?.img[imgIndex]?.img}
                                         title={product?.title}
                                         sx={{
                                             transition: 'transform 0.9s',
@@ -90,9 +98,19 @@ function Product() {
 
                     </Grid>
                     <Grid item xs={6} sx={{ p: 2 }}>
-                        <Typography sx={{ fontSize: 44 }}>{product?.description}{product?.description}</Typography>
-                        <Typography sx={{ fontSize: 44 }}>{product?.title}</Typography>
-                        <Typography sx={{ fontSize: 50, color: 'red' }}> $ {product?.price.toLocaleString('es-AR')}</Typography>
+                        <Typography sx={{ fontSize: 44 }}>{product?.description}{product?.category}</Typography>
+                        <Typography sx={{ fontSize: 44 }}>{product?.material}</Typography>
+                        <Typography sx={{ fontSize: 50, color: 'red' }}> $ {Number(product?.price)?.toLocaleString('es-AR')}</Typography>
+                        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                            {sizes && [...new Set(sizes.map(size => size.size))].map((size, index) => (
+                                <Button key={index} variant="outlined" sx={{ m: 1, width: '25%' }}>{size}</Button>
+                            ))}
+                        </div>
+                        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                            {sizes && [...new Set(sizes.map(size => size.color))].map((color, index) => (
+                                <Button key={index} variant="outlined" sx={{ m: 1, width: '25%' }}>{color}</Button>
+                            ))}
+                        </div>
                         <Button variant="contained" sx={{ m: 1, width: '50%' }}>Comprar ahora</Button>
                         <br />
                         <Button variant="contained" sx={{ m: 1, width: '50%' }} onClick={() => handleAddCart(product)}>Agregar al carrito</Button>

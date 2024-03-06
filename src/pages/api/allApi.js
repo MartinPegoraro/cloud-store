@@ -12,7 +12,7 @@ export const productApi = {
     getAllProduct: async () => {
         try {
             const response = await apiProduct.get('list')
-            return response
+            return response.data
         } catch (error) {
             console.log(error.response);
         }
@@ -20,6 +20,14 @@ export const productApi = {
     getOneProduct: async (id) => {
         try {
             const response = await apiProduct.get(`list/${id}`)
+            return response
+        } catch (error) {
+            console.log(error.response);
+        }
+    },
+    getProductInSize: async (id) => {
+        try {
+            const response = await apiProduct.get(`listProductInSize/${id}`)
             return response
         } catch (error) {
             console.log(error.response);

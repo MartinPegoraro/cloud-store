@@ -20,13 +20,14 @@ import {
 import ManIcon from '@mui/icons-material/Man';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import { productApi } from '@/pages/api/allApi';
 
 
-export default function Categories() {
+export default function Choice() {
     const [clothing, setClothing] = useState([])
     const [routerQuery, setRouterQuery] = useState([])
     const [showClothes, setShowClothes] = useState([])
-    const [dummyData, setDummyData] = useState([])
+    const [query, setQuery] = useState([])
 
     const [checkedTshirt, setCheckedTshirt] = useState(false);
     const [checkedPants, setCheckedPants] = useState(false);
@@ -41,56 +42,57 @@ export default function Categories() {
     const handleChange = (e) => {
         const { checked, value } = e.target
 
-        const filterClothes = (description) => {
-            const newClothing = clothing.filter((cloth) => cloth.description === description);
+        console.log(checked, value);
+        const filterClothes = (name) => {
+            const newClothing = clothing.filter((cloth) => cloth.name.toLowerCase() === name.toLowerCase());
             setShowClothes(prevClothes => [...prevClothes, ...newClothing]);
         }
 
         switch (value) {
-            case 'Remeras':
+            case 'Remera':
                 setShowClothes([]);
                 if (checked) {
                     filterClothes(value);
-                    if (checkedPants) filterClothes('Pantalones');
-                    if (checkedShoe) filterClothes('Zapatillas');
+                    if (checkedPants) filterClothes('Pantalon');
+                    if (checkedShoe) filterClothes('Zapatilla');
                 } else {
                     if (!checkedPants && !checkedShoe) {
                         setShowClothes(clothing);
                     } else {
-                        if (checkedPants) filterClothes('Pantalones');
-                        if (checkedShoe) filterClothes('Zapatillas');
+                        if (checkedPants) filterClothes('Pantalon');
+                        if (checkedShoe) filterClothes('Zapatilla');
                     }
                 }
                 setCheckedTshirt(checked);
                 break;
-            case 'Pantalones':
+            case 'Pantalon':
                 setShowClothes([]);
                 if (checked) {
                     filterClothes(value);
-                    if (checkedTshirt) filterClothes('Remeras');
-                    if (checkedShoe) filterClothes('Zapatillas');
+                    if (checkedTshirt) filterClothes('Remera');
+                    if (checkedShoe) filterClothes('Zapatilla');
                 } else {
                     if (!checkedTshirt && !checkedShoe) {
                         setShowClothes(clothing);
                     } else {
-                        if (checkedTshirt) filterClothes('Remeras');
-                        if (checkedShoe) filterClothes('Zapatillas');
+                        if (checkedTshirt) filterClothes('Remera');
+                        if (checkedShoe) filterClothes('Zapatilla');
                     }
                 }
                 setCheckedPants(checked);
                 break;
-            case 'Zapatillas':
+            case 'Zapatilla':
                 setShowClothes([]);
                 if (checked) {
                     filterClothes(value);
-                    if (checkedTshirt) filterClothes('Remeras');
-                    if (checkedPants) filterClothes('Pantalones');
+                    if (checkedTshirt) filterClothes('Remera');
+                    if (checkedPants) filterClothes('Pantalon');
                 } else {
                     if (!checkedTshirt && !checkedPants) {
                         setShowClothes(clothing);
                     } else {
-                        if (checkedTshirt) filterClothes('Remeras');
-                        if (checkedPants) filterClothes('Pantalones');
+                        if (checkedTshirt) filterClothes('Remera');
+                        if (checkedPants) filterClothes('Pantalon');
                     }
                 }
                 setCheckedShoe(checked);
@@ -102,20 +104,20 @@ export default function Categories() {
 
     const fetchData = async () => {
         const res = await axios.get('/api/dummyData')
+        const productAll = await productApi.getAllProduct()
         let queries = router.query.id
-        const result = res?.data
-            ?.filter((item) => item.title === queries || item.description === queries)
-            ?.map((item) => {
-                if (item.title === queries) {
-                    return { ...item, matchedOn: 'title' }
-                } else if (item.description === queries) {
-                    return { ...item, matchedOn: 'description' }
-                }
-            });
+        const [choice, select] = queries?.split('-');
+        if (choice === 'category') {
+            const resultProducts = productAll?.data?.filter((prod) => prod.category.toLowerCase() === select.toLowerCase())
+            setClothing(resultProducts)
+        } else {
+            const resultProducts = productAll?.data?.filter((prod) => prod.name.toLowerCase() === select.toLowerCase())
+            setClothing(resultProducts)
 
+        }
         setRouterQuery(queries)
-        setClothing(result)
-        setDummyData(res.data)
+        setQuery(choice)
+        // setDummyData(res.data)
     }
 
     useEffect(() => {
@@ -128,58 +130,61 @@ export default function Categories() {
 
                 <Grid item xs={2}>
                     <Paper sx={{ width: '100%', maxWidth: '100%' }}>
-                        {clothing[0]?.matchedOn === 'title' ?
-                            <>
-                                <Typography sx={{ textAlign: 'center' }}>Filtros</Typography>
-                                <Box display="flex" justifyContent="space-between" alignItems="center">
-                                    <Typography sx={{ textAlign: 'left' }}>Remeras</Typography>
-                                    <Switch color="warning"
-                                        checked={checkedTshirt}
-                                        onChange={handleChange}
-                                        value="Remeras"
-                                    />
-                                </Box>
-                                <Box display="flex" justifyContent="space-between" alignItems="center">
-                                    <Typography sx={{ textAlign: 'left' }}>Pantalones</Typography>
-                                    <Switch color="warning"
-                                        checked={checkedPants}
-                                        onChange={handleChange}
-                                        value="Pantalones"
-                                    />
-                                </Box>
-                                <Box display="flex" justifyContent="space-between" alignItems="center">
-                                    <Typography sx={{ textAlign: 'left' }}>Zapatilllas</Typography>
-                                    <Switch color="warning"
-                                        checked={checkedShoe}
-                                        onChange={handleChange}
-                                        value="Zapatillas"
-                                    />
-                                </Box>
+                        {
+                            // clothing[0]?.matchedOn === 'title' ?
+                            query === 'category' ?
 
-                            </>
-                            :
-                            <MenuList>
-                                <Typography sx={{ textAlign: 'center' }}>Filtros</Typography>
-                                <Divider />
-                                <MenuItem>
-                                    <ListItemIcon>
-                                        <ManIcon fontSize="small" />
-                                    </ListItemIcon>
-                                    <ListItemText>Hombre</ListItemText>
-                                </MenuItem>
-                                <MenuItem>
-                                    <ListItemIcon>
-                                        <ManIcon fontSize="small" />
-                                    </ListItemIcon>
-                                    <ListItemText>Mujer</ListItemText>
-                                </MenuItem>
-                                <MenuItem>
-                                    <ListItemIcon>
-                                        <ManIcon fontSize="small" />
-                                    </ListItemIcon>
-                                    <ListItemText>Niño</ListItemText>
-                                </MenuItem>
-                            </MenuList>
+                                <>
+                                    <Typography sx={{ textAlign: 'center' }}>Filtros</Typography>
+                                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                                        <Typography sx={{ textAlign: 'left' }}>Remeras</Typography>
+                                        <Switch color="warning"
+                                            checked={checkedTshirt}
+                                            onChange={handleChange}
+                                            value="Remera"
+                                        />
+                                    </Box>
+                                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                                        <Typography sx={{ textAlign: 'left' }}>Pantalones</Typography>
+                                        <Switch color="warning"
+                                            checked={checkedPants}
+                                            onChange={handleChange}
+                                            value="Pantalon"
+                                        />
+                                    </Box>
+                                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                                        <Typography sx={{ textAlign: 'left' }}>Zapatilllas</Typography>
+                                        <Switch color="warning"
+                                            checked={checkedShoe}
+                                            onChange={handleChange}
+                                            value="Zapatilla"
+                                        />
+                                    </Box>
+
+                                </>
+                                :
+                                <MenuList>
+                                    <Typography sx={{ textAlign: 'center' }}>Filtros</Typography>
+                                    <Divider />
+                                    <MenuItem>
+                                        <ListItemIcon>
+                                            <ManIcon fontSize="small" />
+                                        </ListItemIcon>
+                                        <ListItemText>Hombre</ListItemText>
+                                    </MenuItem>
+                                    <MenuItem>
+                                        <ListItemIcon>
+                                            <ManIcon fontSize="small" />
+                                        </ListItemIcon>
+                                        <ListItemText>Mujer</ListItemText>
+                                    </MenuItem>
+                                    <MenuItem>
+                                        <ListItemIcon>
+                                            <ManIcon fontSize="small" />
+                                        </ListItemIcon>
+                                        <ListItemText>Niño</ListItemText>
+                                    </MenuItem>
+                                </MenuList>
                         }
                     </Paper>
                 </Grid>
