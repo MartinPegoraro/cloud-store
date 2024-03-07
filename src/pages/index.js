@@ -5,6 +5,8 @@ import store from './app/store'
 import { Provider } from 'react-redux'
 import HomePage from '../../components/HomePage/HomePage'
 import OpenHome from '../../components/OpenHome'
+import Footer from '../../components/Footer'
+
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
@@ -12,6 +14,7 @@ export default function Home() {
     <>
       <Header />
       <OpenHome />
+      <Footer />
     </>
   )
 }

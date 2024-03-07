@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import React from 'react'
 
 const ButtonImgList = ({ item }) => {
-    console.log(item.price);
     const router = useRouter()
 
     const handleOpen = (item) => {
