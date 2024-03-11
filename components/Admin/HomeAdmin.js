@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react'
 import {
     Grid,
     Box,
@@ -6,64 +7,95 @@ import {
     ListItemButton,
     ListItemIcon,
     ListItemText,
-    Divider
+    ListItemAvatar,
+    Avatar,
+    Divider,
+    Typography
 } from '@mui/material'
-import React from 'react'
-import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import MenuHomeAdmin from './MenuHomeAdmin';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { productApi } from '@/pages/api/allApi';
+
 function HomeAdmin() {
+    const [product, setProduct] = useState()
+    const [deleteProduct, setDeleteProduct] = useState(false)
+
+    const handleDeleteProduct = async (id) => {
+        const deleteProduct = await productApi.deleteProduct(id)
+        console.log(deleteProduct);
+    }
+
+    const fetchData = async () => {
+        const result = await productApi.getAllProduct()
+        setProduct(result?.data)
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, [])
+
+
     return (
         <>
             <Grid container>
                 <Grid item xs={3}>
-                    <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                        <nav aria-label="main mailbox folders">
-                            <List>
-                                <ListItem disablePadding>
-                                    <ListItemButton>
-                                        <ListItemIcon>
-                                            <CreateNewFolderIcon />
-                                        </ListItemIcon>
-                                        <ListItemText primary="Cargar nuevo producto" />
-                                    </ListItemButton>
-                                </ListItem>
-                                <ListItem disablePadding>
-                                    <ListItemButton>
-                                        <ListItemIcon>
-                                            <AutoFixHighIcon />
-                                        </ListItemIcon>
-                                        <ListItemText primary="Modificar producto" />
-                                    </ListItemButton>
-                                </ListItem>
-                            </List>
-                        </nav>
-                        <Divider />
-                        <nav aria-label="secondary mailbox folders">
-                            <List>
-                                <ListItem disablePadding>
-                                    <ListItemButton>
-                                        <ListItemIcon>
-                                            <DeleteForeverIcon />
-                                        </ListItemIcon>
-                                        <ListItemText primary="Eliminar un Producto" />
-                                    </ListItemButton>
-                                </ListItem>
-                                <ListItem disablePadding>
-                                    <ListItemButton >
-                                        <ListItemIcon>
-                                            <AddCircleIcon />
-                                        </ListItemIcon>
-                                        <ListItemText primary="Agregar stock a un producto" />
-                                    </ListItemButton>
-                                </ListItem>
-                            </List>
-                        </nav>
-                    </Box>
+                    <MenuHomeAdmin
+                        deleteProduct={deleteProduct}
+                        setDeleteProduct={setDeleteProduct}
+                    />
                 </Grid>
-                <Grid item xs={9} sx={{ border: '2px solid black' }}>
+                <Grid item xs={9}>
+                    <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                        {product?.map((prod) => (
+                            <>
+                                {deleteProduct ?
+                                    <Grid container >
+                                        <Grid item xs={0.5} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                            <DeleteIcon onClick={() => handleDeleteProduct(prod.id)} />
+                                        </Grid>
+                                        <Grid item xs={11}>
+                                            <ListItemButton key={prod.id}>
+                                                <ListItemAvatar>
+                                                    <Avatar>
+                                                        <img
+                                                            srcSet={`${prod?.miniature}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                                            src={`${prod?.miniature}?w=248&fit=crop&auto=format`}
+                                                            alt={prod?.title}
+                                                            style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                                                            loading="lazy"
+                                                        />
+                                                    </Avatar>
+                                                </ListItemAvatar>
+                                                <ListItemText
+                                                    primary={`descripción: ${prod?.description} descripción: ${prod?.description}`}
+                                                    secondary={prod?.product_upload_date}
+                                                />
+                                            </ListItemButton>
+                                        </Grid>
+                                    </Grid>
+                                    :
+                                    <ListItemButton key={prod.id}>
+                                        <ListItemAvatar>
+                                            <Avatar>
+                                                <img
+                                                    srcSet={`${prod?.miniature}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                                    src={`${prod?.miniature}?w=248&fit=crop&auto=format`}
+                                                    alt={prod?.title}
+                                                    style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                                                    loading="lazy"
+                                                />
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                            primary={`descripción: ${prod?.description} descripción: ${prod?.description}`}
+                                            secondary={prod?.product_upload_date}
+                                        />
+                                    </ListItemButton>
+                                }
+                            </>
 
+                        ))}
+                    </List>
                 </Grid>
             </Grid>
         </>

@@ -2,7 +2,7 @@ import React from 'react'
 import Header from '../../../components/Header'
 import HomeAdmin from '../../../components/Admin/HomeAdmin'
 
-function Index() {
+export default function Index() {
     return (
         <>
             <Header />
@@ -10,5 +10,3 @@ function Index() {
         </>
     )
 }
-
-export default Index
