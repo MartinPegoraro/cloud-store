@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     Grid,
     Box,
@@ -14,8 +14,12 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
+import ModalCreateProduct from './ModalCreateProduct';
 
 export default function MenuHomeAdmin({ deleteProduct, setDeleteProduct }) {
+    const [open, setOpen] = useState(false)
+
+
     const handleDelete = () => {
         if (!deleteProduct) {
             setDeleteProduct(true)
@@ -25,8 +29,18 @@ export default function MenuHomeAdmin({ deleteProduct, setDeleteProduct }) {
 
         }
     }
+    const handleClose = () => setOpen(false)
+
+    const handleOpenModalCreate = () => {
+        setOpen(true)
+    }
+
     return (
         <>
+            <ModalCreateProduct
+                open={open}
+                handleClose={handleClose}
+            />
             <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
                 <nav aria-label="main mailbox folders">
                     <List>
@@ -39,7 +53,7 @@ export default function MenuHomeAdmin({ deleteProduct, setDeleteProduct }) {
                             </ListItemButton>
                         </ListItem>
                         <ListItem disablePadding>
-                            <ListItemButton>
+                            <ListItemButton onClick={handleOpenModalCreate}>
                                 <ListItemIcon>
                                     <CreateNewFolderIcon />
                                 </ListItemIcon>

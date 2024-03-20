@@ -38,18 +38,18 @@ function HomeAdmin() {
     return (
         <>
             <Grid container>
-                <Grid item xs={3}>
+                <Grid item xs={3} >
                     <MenuHomeAdmin
                         deleteProduct={deleteProduct}
                         setDeleteProduct={setDeleteProduct}
                     />
                 </Grid>
-                <Grid item xs={9}>
+                <Grid item xs={9} >
                     <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
                         {product?.map((prod) => (
                             <>
                                 {deleteProduct ?
-                                    <Grid container >
+                                    <Grid container sx={{ borderTop: '0.5px solid rgba(0, 0, 0, 0.1)', borderBottom: '0.5px solid rgba(0, 0, 0, 0.1)' }}>
                                         <Grid item xs={0.5} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                             <DeleteIcon onClick={() => handleDeleteProduct(prod.id)} />
                                         </Grid>
@@ -68,13 +68,13 @@ function HomeAdmin() {
                                                 </ListItemAvatar>
                                                 <ListItemText
                                                     primary={`descripción: ${prod?.description} descripción: ${prod?.description}`}
-                                                    secondary={prod?.product_upload_date}
+                                                    secondary={prod?.product_upload_date?.slice(0, 10)}
                                                 />
                                             </ListItemButton>
                                         </Grid>
                                     </Grid>
                                     :
-                                    <ListItemButton key={prod.id}>
+                                    <ListItemButton key={prod.id} sx={{ borderTop: '0.5px solid rgba(0, 0, 0, 0.1)', borderBottom: '0.5px solid rgba(0, 0, 0, 0.1)' }}>
                                         <ListItemAvatar>
                                             <Avatar>
                                                 <img
@@ -88,7 +88,7 @@ function HomeAdmin() {
                                         </ListItemAvatar>
                                         <ListItemText
                                             primary={`descripción: ${prod?.description} descripción: ${prod?.description}`}
-                                            secondary={prod?.product_upload_date}
+                                            secondary={`cargado el: ${prod?.product_upload_date?.slice(0, 10)}`}
                                         />
                                     </ListItemButton>
                                 }
