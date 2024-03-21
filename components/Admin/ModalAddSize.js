@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { use, useState } from 'react'
 import { Typography, Box, Modal, TextField, Button, Select, MenuItem, Alert } from '@mui/material';
 import style from './AdminPage.module.css'
 import { productApi } from '@/pages/api/allApi';
 const ModalAddSize = ({ open, handleCloseAddSize, idProduct }) => {
     const [fieldSize, setFieldSize] = useState({ product_id: '', size: '', color: '', amount: '' })
-
+    const [correct, setCorrect] = useState(false)
     const onInputChange = async (e) => {
         const { value, name } = e.target
         setFieldSize({ ...fieldSize, [name]: value })
@@ -19,7 +19,18 @@ const ModalAddSize = ({ open, handleCloseAddSize, idProduct }) => {
         }
 
         const result = await productApi.createOneSize(data)
-        console.log(result);
+        if (result?.status === 200) {
+            setFieldSize({
+                size: '',
+                color: '',
+                amount: ''
+            })
+            setCorrect(true)
+            setTimeout(() => {
+                setCorrect(false)
+
+            }, 4000);
+        }
     }
     return (
         <>
@@ -76,6 +87,10 @@ const ModalAddSize = ({ open, handleCloseAddSize, idProduct }) => {
                     <Button variant="contained" color="success" onClick={handleSubmit} sx={{ mb: 1 }}>
                         Cargar talle
                     </Button>
+                    {
+                        correct &&
+                        <Alert severity="success">Se cargo el talle correctamente, desea cargar mas?.</Alert>
+                    }
                 </Box>
             </Modal>
         </>
