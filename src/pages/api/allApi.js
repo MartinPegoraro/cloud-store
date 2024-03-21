@@ -36,7 +36,7 @@ export const productApi = {
     createOneProduct: async (data) => {
         try {
             const response = await apiProduct.post('addProduct', data)
-            return response
+            return response?.data?.data
         } catch (error) {
             console.log(error.response);
         }
