@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import ModalAddSize from './ModalAddSize';
 import { productApi } from '@/pages/api/allApi';
 
-const ModalCreateProduct = ({ open, handleClose, image }) => {
+const ModalCreateProduct = ({ open, handleClose, fetchData }) => {
     const [fieldMissing, setFieldMissing] = useState(false)
     const [openModalSize, setOpenModalSize] = useState(false)
     const [idProduct, setIdProduct] = useState(false)
@@ -41,18 +41,15 @@ const ModalCreateProduct = ({ open, handleClose, image }) => {
     };
     const handleSubmit = async () => {
         const areAllFieldsFilled = Object.values(createProduct).every(value => {
-            // Si el valor es una cadena de texto, verifica si está vacío después de eliminar espacios en blanco al principio y al final
             if (typeof value === 'string') {
                 return value.trim() !== "";
             }
-            // Si el valor no es una cadena de texto, considéralo completo
             return true;
         });
 
         if (areAllFieldsFilled) {
-            handleClose()
-            // console.log("Todos los campos están completados, enviar la información...");
             const result = await productApi.createOneProduct(createProduct)
+            fetchData()
             setIdProduct(result[0]?.id)
             setOpenModalSize(true)
         } else {

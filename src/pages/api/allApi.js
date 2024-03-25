@@ -75,7 +75,6 @@ export const productApi = {
     },
     deleteProduct: async (id) => {
         try {
-            console.log(id);
             const response = await apiProduct.delete(`deleteProduct/${id}`)
             return response
         } catch (error) {

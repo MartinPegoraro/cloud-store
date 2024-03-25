@@ -2,6 +2,7 @@ import React, { use, useState } from 'react'
 import { Typography, Box, Modal, TextField, Button, Select, MenuItem, Alert } from '@mui/material';
 import style from './AdminPage.module.css'
 import { productApi } from '@/pages/api/allApi';
+
 const ModalAddSize = ({ open, handleCloseAddSize, idProduct }) => {
     const [fieldSize, setFieldSize] = useState({ product_id: '', size: '', color: '', amount: '' })
     const [correct, setCorrect] = useState(false)

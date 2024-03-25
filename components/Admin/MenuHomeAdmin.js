@@ -16,17 +16,23 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
 import ModalCreateProduct from './ModalCreateProduct';
 
-export default function MenuHomeAdmin({ deleteProduct, setDeleteProduct }) {
+export default function MenuHomeAdmin({ deleteProduct, setDeleteProduct, modifyProduct, setModifyProduct, fetchData, setSelectOneProduct, selectOneProduct }) {
     const [open, setOpen] = useState(false)
 
 
     const handleDelete = () => {
         if (!deleteProduct) {
             setDeleteProduct(true)
-
         } else {
             setDeleteProduct(false)
+        }
+    }
 
+    const handleModify = () => {
+        if (!modifyProduct) {
+            setModifyProduct(true)
+        } else {
+            setModifyProduct(false)
         }
     }
     const handleClose = () => setOpen(false)
@@ -40,12 +46,13 @@ export default function MenuHomeAdmin({ deleteProduct, setDeleteProduct }) {
             <ModalCreateProduct
                 open={open}
                 handleClose={handleClose}
+                fetchData={fetchData}
             />
             <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
                 <nav aria-label="main mailbox folders">
                     <List>
                         <ListItem disablePadding>
-                            <ListItemButton>
+                            <ListItemButton onClick={() => setSelectOneProduct(false)}>
                                 <ListItemIcon>
                                     <AllInclusiveIcon />
                                 </ListItemIcon>
@@ -61,7 +68,7 @@ export default function MenuHomeAdmin({ deleteProduct, setDeleteProduct }) {
                             </ListItemButton>
                         </ListItem>
                         <ListItem disablePadding>
-                            <ListItemButton>
+                            <ListItemButton onClick={handleModify} disabled={selectOneProduct}>
                                 <ListItemIcon>
                                     <AutoFixHighIcon />
                                 </ListItemIcon>
@@ -74,7 +81,7 @@ export default function MenuHomeAdmin({ deleteProduct, setDeleteProduct }) {
                 <nav aria-label="secondary mailbox folders">
                     <List>
                         <ListItem disablePadding>
-                            <ListItemButton onClick={handleDelete}>
+                            <ListItemButton onClick={handleDelete} disabled={selectOneProduct}>
                                 <ListItemIcon>
                                     <DeleteForeverIcon />
                                 </ListItemIcon>
@@ -82,7 +89,7 @@ export default function MenuHomeAdmin({ deleteProduct, setDeleteProduct }) {
                             </ListItemButton>
                         </ListItem>
                         <ListItem disablePadding>
-                            <ListItemButton >
+                            <ListItemButton disabled={selectOneProduct}>
                                 <ListItemIcon>
                                     <AddCircleIcon />
                                 </ListItemIcon>
